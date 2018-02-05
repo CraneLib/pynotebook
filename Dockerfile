@@ -2,7 +2,7 @@
 FROM ubuntu:16.04
 
 
-# Pick up some TF dependencies
+# Pick up some dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential \
         curl \
@@ -40,7 +40,8 @@ RUN python3 -m pip install --upgrade pip setuptools \
         ipykernel \
         jupyter \
         matplotlib \
-        numpy 
+        numpy \
+        pandas
 
 RUN python2 -m pip install --upgrade pip setuptools \
     && \
