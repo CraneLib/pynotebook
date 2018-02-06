@@ -35,6 +35,7 @@ RUN echo "alias python=python3.6" >> ~/.bashrc
 # RUN echo "alias pip=pip3" >> ~/.bashrc 
 
 RUN python3.6 -m pip install --upgrade pip \
+    && \
     python3.6 -m pip install --upgrade setuptools \
     && \
     python3.6 -m pip --no-cache-dir install \
@@ -48,6 +49,7 @@ RUN python3.6 -m pip install --upgrade pip \
         pandas
 
 RUN python2 -m pip install --upgrade pip \
+    && \
     python2 -m pip install --upgrade setuptools \
     && \
     python2 -m pip --no-cache-dir install \
