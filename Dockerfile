@@ -1,6 +1,5 @@
 # craneleeon/pynotebook
-FROM ubuntu:16.04
-
+FROM ubuntu:16.04 
 
 # Pick up some dependencies
 RUN apt-get update && apt-get install -y software-properties-common
@@ -32,7 +31,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 #     rm get-pip.py
 
 RUN echo "alias python=python3.6" >> ~/.bashrc
-# RUN echo "alias pip=pip3" >> ~/.bashrc 
+RUN alias python=python3.6
+RUN alias python3=python3.6
 
 RUN python3.6 -m pip install --upgrade pip \
     && \
