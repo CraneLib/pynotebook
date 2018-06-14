@@ -88,4 +88,5 @@ EXPOSE 8888
 
 WORKDIR "/notebooks"
 
+ENV LC_ALL=C.UTF-8
 CMD ["/run_jupyter.sh", "--allow-root"]
