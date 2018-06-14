@@ -1,11 +1,13 @@
 # craneleeon/pynotebook
-FROM ubuntu:16.04
-
+FROM ubuntu:16.04 
 
 # Pick up some dependencies
+RUN apt-get update && apt-get install -y software-properties-common
+RUN add-apt-repository ppa:jonathonf/python-3.6
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential \
         curl \
+				git \
         libfreetype6-dev \
         libpng12-dev \
         libzmq3-dev \
@@ -14,12 +16,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python-dev \
         python-wheel \
         python-pip \
-        python3 \
-        python3-dev \
-        python3-wheel \
+        python3.6 \
+        python3.6-dev \
+				python3.6-venv \
         python3-pip \
         rsync \
-        software-properties-common \
         unzip \
         && \
     apt-get clean && \
@@ -29,12 +30,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 #     python get-pip.py && \
 #     rm get-pip.py
 
-RUN echo "alias python=python3" >> ~/.bashrc
-RUN echo "alias pip=pip3" >> ~/.bashrc 
+RUN echo "alias python=python3.6" >> ~/.bashrc
+RUN alias python=python3.6
+RUN alias python3=python3.6
 
-RUN python3 -m pip install --upgrade pip setuptools \
+RUN python3.6 -m pip install --upgrade pip \
     && \
-    python3 -m pip --no-cache-dir install \
+    python3.6 -m pip install --upgrade setuptools \
+    && \
+    python3.6 -m pip --no-cache-dir install \
+        wheel \
         Pillow \
         h5py \
         ipykernel \
@@ -43,17 +48,20 @@ RUN python3 -m pip install --upgrade pip setuptools \
         jupyter_nbextensions_configurator \
         matplotlib \
         numpy \
-        pandas
+        pandas 
 
-RUN python2 -m pip install --upgrade pip setuptools \
+RUN python2 -m pip install --upgrade pip \
     && \
-    python2 -m pip install ipykernel \
+    python2 -m pip install --upgrade setuptools \
+    && \
+    python2 -m pip --no-cache-dir install \
+        ipykernel \
         matplotlib \
         numpy \
 		&& \
 		python2 -m ipykernel install --user
     
-RUN python3 -m ipykernel.kernelspec
+RUN python3.6 -m ipykernel.kernelspec
 # Enable nbextention
 RUN jupyter contrib nbextension install --user
 
@@ -78,4 +86,5 @@ EXPOSE 8888
 
 WORKDIR "/notebooks"
 
+ENV LC_ALL=C.UTF-8
 CMD ["/run_jupyter.sh", "--allow-root"]
